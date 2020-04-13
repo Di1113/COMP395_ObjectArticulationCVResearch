@@ -28,6 +28,8 @@ r = abs(u-m);                                       %r radii of circles created 
 
 
 
+% abc
+
 
 inside = imag(dot) > 0;                             %gives 0 if center outside, 1 if inside
 
