@@ -38,9 +38,6 @@ classdef BlumMedialAxis
                 bma = calculateEDF(bma); 
                 bma = calculateWEDF(bma);
                 bma = calculateETandST(bma); 
-                 
-                
-                 
             end
         end
 
@@ -62,18 +59,22 @@ classdef BlumMedialAxis
         end
 
         function length = getLength(bma)
-        % GETLENGTH Returns the length of bma.pointsArray, the same as the numer of points on our medial axis.
+        % GETLENGTH Returns the length of bma.pointsArray, the same as the
+        % numer of points on our medial axis.
             length = length(bma.pointsArray);
         end
 
         function bma = removePoint(bma, point)
-        % REMOVEPOINT Removes point from bma. point should be a complex-valued point on the medial axis.
+        % REMOVEPOINT Removes point from bma. point should be a complex-valued
+        % point on the medial axis.
             index = find(bma.pointsArray == point);
             BlumMedialAxis.removeAtIndex(bma, index);
         end
 
         function bma = removeAtIndex(bma, index)
-        % REMOVEATINDEX Removes the point at the given index from bma.index can be a scalar or an array. Any time we add properties to the class, we have to ensure we remove them here to keep the rows aligned.
+        % REMOVEATINDEX Removes the point at the given index from bma.index
+        % can be a scalar or an array. Any time we add properties to the class,
+        % we have to ensure we remove them here to keep the rows aligned.
             point = bma.pointsArray(index);
             bma = removeFromMedialData(bma, point);
 
@@ -94,13 +95,21 @@ classdef BlumMedialAxis
 
         end
 
-
+% pyed
         function bma = buildPoints(bma, medialData)
-        % BUILDPOINTS Sets up our medial axis based on the information in medialData. medialData should be an nx5 matrix where medialData(n,1) is the location of a point on the axis, medialData(n,2) is the radius to boundary at that point, and medialData(n,3:5) are the boundary points associated with that point. If it is the return value of the medialaxis function, then some points may be given by more than one set of boundary points and will then have multiple entried in medialData.
+        % BUILDPOINTS Sets up our medial axis based on the information in
+        % medialData. medialData should be an nx5 matrix where medialData(n,1)
+        % is the location of a point on the axis, medialData(n,2) is the radius
+        % to boundary at that point, and medialData(n,3:5) are the boundary
+        % points associated with that point. If it is the return value of the
+        % medialaxis function, then some points may be given by more than one
+        % set of boundary points and will then have multiple entried in medialData.
             % Get the set of adjacencies.
             mord = BlumMedialAxis.medialOrder(medialData);
 
-            % For each entry in mord, we check to see if we already have that point in bma, and add it if not. We do not yet set adjacencies because we do not know how many unique points are in mord.
+            % For each entry in mord, we check to see if we already have that
+            % point in bma, and add it if not. We do not yet set adjacencies
+            % because we do not know how many unique points are in mord.
             for i = 1:length(mord)
                 pointA = mord(1,i);
                 pointB = mord(2,i);
@@ -112,7 +121,8 @@ classdef BlumMedialAxis
                 end
             end
 
-            % Now that we know how many unique points we have, we make our adjacency matrix and set the adjacencies given by mord.
+            % Now that we know how many unique points we have, we make our
+            % adjacency matrix and set the adjacencies given by mord.
             bma.adjacencyMatrix = logical(zeros(length(bma.pointsArray), length(bma.pointsArray)));
             for i = 1:length(mord)
                 indexM = find(bma.pointsArray == mord(1,i));
@@ -145,7 +155,6 @@ classdef BlumMedialAxis
 
         end
 
-        % debug assigned to Chenghao        
         function [index, bma] = findOrAdd(bma, medialData, point)
         % FINDORADD Attempts to find the index of point in bma.pointsArray. If the point is not in bma.pointsArray, then it adds the point with the appropriate information from medialData.
             index = find(bma.pointsArray == point);  
@@ -190,7 +199,7 @@ classdef BlumMedialAxis
         
         function figure1 = plotWithEDF(bma)
         % PLOTWITHEDF Plots the points and the edges (adjacencies) of bma
-        % and coloours the point relative to the EDF value
+        % and colours the point relative to the EDF value
             figure1 = figure;
             hold on;
             l=length(bma.pointsArray)
@@ -241,7 +250,7 @@ classdef BlumMedialAxis
             hold off;
         end
 
-  function figure1 = plotWithST(bma)
+        function figure1 = plotWithST(bma)
         % PLOTWITHEDF Plots the delaunay triangles and the edges (adjacencies) of bma
         % and colors the triangles relative to the WEDF value (blue for
         % low, red for high)
@@ -267,9 +276,9 @@ classdef BlumMedialAxis
             gplot(bma.adjacencyMatrix, [real(bma.pointsArray), imag(bma.pointsArray)],'g-');
             axis equal
             hold off;
-  end
+        end
         
-    function figure1 = plotWithET(bma)
+        function figure1 = plotWithET(bma)
         % PLOTWITHEDF Plots the delaunay triangles and the edges (adjacencies) of bma
         % and colors the triangles relative to the WEDF value (blue for
         % low, red for high)
@@ -295,7 +304,7 @@ classdef BlumMedialAxis
             gplot(bma.adjacencyMatrix, [real(bma.pointsArray), imag(bma.pointsArray)],'g-');
             axis equal
             hold off;
-    end
+        end
         
 
         function indicesOfConstrainedEnds = findConstrainedEnds(bma)
@@ -328,12 +337,12 @@ classdef BlumMedialAxis
             boundary(1) = []
         end
 
-        % debug assigned to Jialin 
+% pyed 
         function [z, medialData] = medialAxis(boundary)
         % MEDIALAXIS Takes an nx1 complex-valued boundary curve and outputs z, the boundary curve (I don't know if it is changed or not), and medialData, an mx5 matrix. medialData(i,1) is a complex-valued point on the medial axis, medialData(i,2) is the radius associated with the point medialData(i,1), and each medialData(i,3:5) is an index in z of one of three points on the boundary associated with medialData(i,1). This function is a wrapper for the medialaxis imperative function.
             [z, medialData] = medialaxis(boundary);
         end
-
+% pyed
         function mord = medialOrder(medialData)
         % MEDIALORDER Takes medialData (described in medialAxis()) and returns a 2xn matrix where mord(:,i) denotes an edge from the point given by mord(1,i) to the point given by mord(2,i).
             mord = medialorder(medialData);
@@ -357,9 +366,9 @@ classdef BlumMedialAxis
             end %if isempty
             
             
-            mord2 = mord;
 
             % get rid of point pairs that occur more than once
+%           mord2 = mord;
 %           for k=size(mord2,2)
 %                 if (mord2(1,k)-mord2(2,k)~=0)
 %                 [dd] = find(sum(mord-mord2(:,k)*ones(1,size(mord,2)),1)==0);
@@ -375,7 +384,7 @@ classdef BlumMedialAxis
         end
     end
 
-    methods (Access = private)
+    methods (Access = private) 
         function bma = removeFromMedialData(bma, point)
             % This is logical indexing. Faster than calling find().
             bma.medialData(ismember(bma.medialData(:,1), point),:) = [];
