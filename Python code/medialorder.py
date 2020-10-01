@@ -38,12 +38,13 @@ B = np.dot(B1,B2)
 
 #test = np.mat([[0,5,5],[1,1,1],[0,0,0]])
 #print(test)
+
 C = np.where(B > 1)
-print("new:",C)
+#print("new:",C)
 array_x = C[0]
 array_y = C[1]
-new_x = []
-new_y = []
+new_x = [] #符合的x
+new_y = [] #符合的y
 
 zipped = list(zip(array_x,array_y))
 #print(zipped)
@@ -60,6 +61,6 @@ for i in range(len(new_x)):
     list1.append(m2[new_x[i] - 1].tolist()[0])
     list2.append(m2[new_y[i] - 1].tolist()[0])
 
-mord = np.mat(list1,list2)
-print(list1)
-print(list2)
+mord = np.asmatrix(np.array([list1,list2]))
+
+print(mord)
