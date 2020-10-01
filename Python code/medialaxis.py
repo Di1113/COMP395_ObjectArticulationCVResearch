@@ -1,6 +1,8 @@
 import numpy as np
 from scipy.spatial import Delaunay
 import matplotlib.pyplot as plt
+import cv2
+
 
 def medialaxis(boundary):
 
