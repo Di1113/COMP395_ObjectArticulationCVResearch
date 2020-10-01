@@ -1,16 +1,10 @@
 import cv2
 from numpy import *
+from medialaxis import medialaxis
 
-# input a picture
-img = cv2.imread('2.jpg')
-
-#灰化  貌似效果不好  我直接拿了原来的黑白图像
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-ret, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
-
-def find_contour(img):
+def find_contour(img, binary):
     #find contours
-    contours, hierarchy = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    contours, hierarchy = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2:]
     cv2.drawContours(img, contours, -1, (0, 255, 255), 1)
         #cv2.imshow("img", img)
         #cv2.waitKey(0)
@@ -33,6 +27,15 @@ def find_contour(img):
     return coordinates
 
 
+# input a picture
+img = cv2.imread('2.jpg')
+
+#灰化  貌似效果不好  我直接拿了原来的黑白图像
+gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+ret, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
+
+coord = find_contour(img, binary)
+medialdata = medialaxis(coord)
 
 
 

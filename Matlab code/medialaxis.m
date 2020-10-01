@@ -10,8 +10,10 @@ function [z, medialdata] = medialaxis(z)
     if sum((real(z) - circshift(real(z),-1)).*(imag(z)+circshift(imag(z),-1))) >0
         z = flipud(z);
     end
-    
+
 tri =sort(delaunay(real(z),imag(z))')';
+% visualization for debugging 
+% plot(real(z),imag(z),'.b')
 % DT = delaunay(real(z),imag(z));
 % triplot(DT,real(z),imag(z));
 % hold on
@@ -30,17 +32,21 @@ m = (u+v+i*(u-v).*real(dot)./imag(dot))/2;          %(real(m),image(m)) centers 
 
 r = abs(u-m);                                       %r radii of circles created in tri
 
-
-
 % abc
 
 
 inside = imag(dot) > 0;                             %gives 0 if center outside, 1 if inside
-
 triin = tri(inside,:);                              %removes outside information
 
 m = m(inside); r = r(inside);                       %(real(m),imag(m)) centers inside circles
+
+% visualization for debugging 
+% disp("m")
+% disp(size(m))
+% disp("r")
+% disp(size(r))
 % plot(real(m),imag(m),'*r')
+
 medialdata = [m r triin];
 
 end
