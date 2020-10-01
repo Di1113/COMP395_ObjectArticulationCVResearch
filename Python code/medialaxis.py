@@ -17,11 +17,14 @@ def medialaxis(boundary):
         coordinates.append([int(i.real), int(i.imag)])
 
     points = np.array(coordinates)
+    print(points) 
 
     tri = Delaunay(points)
     # '''
-    plt.triplot(points[:,0], points[:,1], tri.simplices)
-    # plt.plot(points.real, points.imag, 'o')
+    plt.scatter(points[:,0], points[:,1])
+    plt.plot(points[:,0], points[:,1]) # plots boundary points with connected lines
+    # plt.triplot(points[:,0], points[:,1], tri.simplices) # plots Delaunay triangles  
+    # plt.plot(points[:,0], points[:,1], 'o') # plots boundary points
     # plt.show()
     # '''
     tri = np.array(tri.simplices)
@@ -66,7 +69,7 @@ def medialaxis(boundary):
 # [array([4.  +3.j, 1.25+3.j, 1.25+3.j]), array([1.41421356, 2.01556444, 2.01556444]), array([[2, 3, 4],[1, 2, 4],[1, 4, 5]], dtype=int32)]
 
 # test data: heart  
-# '''
+'''
 pt1 = complex(4,-2) 
 pt2 = complex(5,-1) 
 pt3 = complex(6,-.5) 
@@ -89,10 +92,10 @@ pt19 = complex(4,-2)
 
 z = np.array([pt1, pt2, pt3, pt4, pt5, pt6, pt7, pt8, pt9, pt10, pt11, pt12, pt13, pt14, pt15, pt16, pt17, pt18, pt19])
 a = medialaxis(z)
-# '''
+'''
 
 # test data: ginger man 
-'''
+# '''
 x = [(0,9) , (1,8) , (1.5,7) , (2,5) , (1.5,3) , (0.5,1.5) , (3,1) , (4,1) , (5,1.5) , (6,2) , (7,1.5), (7.5,1) , (8,0) , (7,-1.5) , (5,-2.5) , (4,-2.5) , (2.5,-3) , (2,-4) , (2,-6.5) , (2,-7.5) , (2,-8), (2.5,-9.5) , (3.5,-11) , (4,-12) , (5,-13.5) , (5,-14.5) , (4.5,-15.5) , (2,-16) , (0.5,-14.5) , (-0.5,-13.5), (-1.5,-12) , (-2.5,-9.5) , (-4,-12) , (-4.5,-13) , (-5,-14) , (-6,-15) , (-8,-16) , (-9.5,-15.5) , (-10.5,-14), (-10,-13) , (-9,-11.5) , (-8.5,-11) , (-7.5,-9) , (-7,-8) , (-7,-7) , (-7,-6) , (-6.5,-4) , (-7,-3), (-9.5,-2.5) , (-10.5,-2) , (-11.5,-1.5) , (-13,0) , (-12.5,1) , (-12,2), (-10,2), (-9,1.5), (-8,1.5), (-7,1.5), (-6,2), (-7,4), (-7,6), (-6,8), (-5,9), (-2.5,9.5), (0,9)]
 z = []
 print(len(x))
@@ -102,4 +105,5 @@ for y in x:
 print(z)
 z = np.array(z)
 a = medialaxis(z)
-'''
+print(a)
+# '''

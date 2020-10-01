@@ -12,6 +12,10 @@ function [z, medialdata] = medialaxis(z)
     end
     
 tri =sort(delaunay(real(z),imag(z))')';
+% DT = delaunay(real(z),imag(z));
+% triplot(DT,real(z),imag(z));
+% hold on
+
 % dt = delaunayTriangulation(real(z),imag(z))';
 % dtt(:,1) = dt(:,1);
 % dtt(:,2) = dt(:,2);
@@ -35,8 +39,8 @@ inside = imag(dot) > 0;                             %gives 0 if center outside, 
 
 triin = tri(inside,:);                              %removes outside information
 
-m = m(inside); r = r(inside);                       %(real(m),image(m)) centers inside circles
-
+m = m(inside); r = r(inside);                       %(real(m),imag(m)) centers inside circles
+% plot(real(m),imag(m),'*r')
 medialdata = [m r triin];
 
 end
