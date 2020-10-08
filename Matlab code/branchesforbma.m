@@ -138,15 +138,20 @@ if length(find(longbranch))
             bpath = [triplepoint(find(ismember(triplepoint, find(bma.adjacencyMatrix(branchstarts(branchno-startind),:))))) branchstarts(branchno-startind)];
             u =branchstarts(branchno-startind);
             while u~=branchends(branchno-startind)
-                u = predpath{idx(branchno-startind)}(u);
+                tempu = predpath{idx(branchno-startind)}(u);
+                if tempu > 0
+                    u = tempu;
+                else
+                    break
+                end 
                 bpath = [bpath u];
             end %while
             bpath = [bpath triplepoint(find(ismember(triplepoint, find(bma.adjacencyMatrix(u,:)))))];
-        elseif length(triplestart==2)
+        elseif length(triplestart)==2
             bpath = [triplestart(1) branchends(branchno-startind) triplestart(2)];
         end % if length
         branch{branchno} = bpath;    
-    end %for branchno
+    end %for branchno       
 end % if longbranch, case 4
  
 % insert branch point order number into column with index = branchno
