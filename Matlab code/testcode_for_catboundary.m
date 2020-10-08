@@ -1,5 +1,5 @@
-A=imread('1.jpg');   %¶ÁÈ¡µ½Ò»ÕÅÍ¼Æ¬
-%p1 = imcomplement(A);    % ºÚ°×µßµ¹ °×Ã¨
+A=imread('1.jpg');   %ï¿½ï¿½È¡ï¿½ï¿½Ò»ï¿½ï¿½Í¼Æ¬
+%p1 = imcomplement(A);    % ï¿½Ú°×µßµï¿½ ï¿½ï¿½Ã¨
 p1=imcomplement(A);
 p = rgb2gray(p1);
 se=strel('square',2);
@@ -31,4 +31,6 @@ bw3=bwperim(bw2);%boundaries
 
 catboundary = B{1};
 catboundary = complex(catboundary(:,1), catboundary(:,2));
+disp(catboundary)
 bmacat = BlumMedialAxis(catboundary);
+plotWithWEDF(bmacat)
