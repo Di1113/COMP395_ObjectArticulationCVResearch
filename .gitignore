@@ -8,3 +8,5 @@ Python code/.idea
 Python code/*.html
 *.DS_Store
 */__pycache__/*
+*.txt
+*.mat
