@@ -38,18 +38,21 @@ function bma = calculateEDF(bma)
         
         % check for two triangles with same center and remove closer point
         % if there is one
-        
-        if length(pinds)==2 && temp.pointsArray(pinds(1))==temp.pointsArray(pinds(2))
-            for jj=1:2
-                bpts(jj) = length(find(ismember(temp.indexOfBndryPoints(pinds(jj),:), temp.indexOfBndryPoints(indexOfParent,:))));
-            end % for jj
-            [~,nearpt] = sort(bpts, 'descend');
-            temp = temp.removeAtIndex(pinds(nearpt(1)));
-            if (pinds(nearpt(1)) < indexOfParent)
-                indexOfParent = indexOfParent - 1;
-            end
-        end
-             
+
+% % % % % % % % % % % % % % % % % % % % % % % % 
+% %             BUG TO BE RESOLVED          % % 
+% % % % % % % % % % % % % % % % % % % % % % % % 
+%         if length(pinds)==2 && temp.pointsArray(pinds(1))==temp.pointsArray(pinds(2))
+%             for jj=1:2
+%                 bpts(jj) = length(find(ismember(temp.indexOfBndryPoints(pinds(jj),:), temp.indexOfBndryPoints(indexOfParent,:))));
+%             end % for jj
+%             [~,nearpt] = sort(bpts, 'descend');
+%             temp = temp.removeAtIndex(pinds(nearpt(1)));
+%             if (pinds(nearpt(1)) < indexOfParent)
+%                 indexOfParent = indexOfParent - 1;
+%             end
+%         end
+% % % % % % % % % % % % % % % % % % % % % % % %              
         
 		% If removing smallest caused parent to become a constrained end, we set its rTilde to be rTilde of smallest + the distance from parent to smallest.
 		if length(find(temp.adjacencyMatrix(indexOfParent,:))) == 1

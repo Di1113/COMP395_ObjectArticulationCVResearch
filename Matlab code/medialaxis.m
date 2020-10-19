@@ -12,11 +12,15 @@ function [z, medialdata] = medialaxis(z)
     end
 
 tri =sort(delaunay(real(z),imag(z))')';
-% visualization for debugging 
-% plot(real(z),imag(z),'.b')
+
+% % % % % % % % % % % % % % % % % % % % % % % % 
+% %   delaunay visualization for debugging  % % 
+% % % % % % % % % % % % % % % % % % % % % % % % 
+% plot(real(z),imag(z),'-b')
 % DT = delaunay(real(z),imag(z));
 % triplot(DT,real(z),imag(z));
 % hold on
+% % % % % % % % % % % % % % % % % % % % % % % % 
 
 % dt = delaunayTriangulation(real(z),imag(z))';
 % dtt(:,1) = dt(:,1);
@@ -40,12 +44,10 @@ triin = tri(inside,:);                              %removes outside information
 
 m = m(inside); r = r(inside);                       %(real(m),imag(m)) centers inside circles
 
+% % % % % % % % % % % % % % % % % % % % % % % % 
 % visualization for debugging 
-% disp("m")
-% disp(size(m))
-% disp("r")
-% disp(size(r))
 % plot(real(m),imag(m),'*r')
+% % % % % % % % % % % % % % % % % % % % % % % % 
 
 medialdata = [m r triin];
 

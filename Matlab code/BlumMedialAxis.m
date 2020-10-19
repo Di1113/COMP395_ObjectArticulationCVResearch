@@ -41,8 +41,7 @@ classdef BlumMedialAxis
             end
         end
 
-        % METHODS
-        % debug assigned to Di 
+        % METHODS 
         function bma = prune(bma, etRatio, stThreshold)
             % We'll calculate area of the shape
             area = polyarea(real(bma.boundary), imag(bma.boundary));
@@ -143,7 +142,7 @@ classdef BlumMedialAxis
                             end %if
                         end%for
                     end%for
-                end 
+                end
             end
 
             % Initialize the rest of the properties.
@@ -156,33 +155,34 @@ classdef BlumMedialAxis
         end
 
         function [index, bma] = findOrAdd(bma, medialData, point)
-        % FINDORADD Attempts to find the index of point in bma.pointsArray. If the point is not in bma.pointsArray, then it adds the point with the appropriate information from medialData.
-            index = find(bma.pointsArray == point);  
-            indexInMD = find(medialData(:,1) == point);
-            dbp1=0;
-            dbp2=0;
-             
-            if (length(index)==1) % check if they have the same boundary points
-                indexInMD = find(medialData(:,1) == point);
-                bp1 = sort(medialData(indexInMD(1),3:5));
-                bp2 = sort(bma.indexOfBndryPoints(index,:));
-                dbp1 = ~isempty(find(~(bp1 == bp2))); %they have different boundary points
-                if length(indexInMD)>=2
-                     bp3 = sort(medialData(indexInMD(2),3:5));
-                     dbp2 = ~isempty(find(~(bp3 == bp2))); %they have different boundary points
-                end
-            end
-            
-            if (isempty(index)|| dbp1 || dbp2)                
-                 %if they have different boundary points: keep point
-                  bma.pointsArray = [bma.pointsArray; point];
-                  bma.radiiArray = [bma.radiiArray; medialData(indexInMD(1),2)];
-                  if isempty(index) || dbp1
-                    bma.indexOfBndryPoints = [bma.indexOfBndryPoints; medialData(indexInMD(1),3:5)];
-                  else
-                    bma.indexOfBndryPoints = [bma.indexOfBndryPoints; medialData(indexInMD(2),3:5)];
-                  end
-                  index = length(bma.pointsArray);
+        % FINDORADD populates bma.pointsArray. Attempts to find the index of point in bma.pointsArray. If the point is not in bma.pointsArray, then it adds the point with the appropriate information from medialData; if the point is in bma.pointsArray, find if there is a point with different boundary points in medialData, if found, add the point; if the point is in bma.pointsArray, and there is not point in medialData with different boundary points, it is a duplicated point, do not add the point. 
+            index = find(bma.pointsArray == point);  %if the point already exists in pointsArray, index ~= [] 
+            indexInMD = find(medialData(:,1) == point); % indices of BMA points with same coordinates in medialData  
+            numPtArr = length(index); % if the point already exists, numPtArr ~= 0 
+            numMData = length(indexInMD); % number of same-coord points in medialData 
+            if (numPtArr~=0) % point with the same coordinate already exist in pointArray 
+                for i = 1 : numMData % loop medialData points with the same coordinates 
+                    diffPtsTF = [];
+                    bp1 = sort(medialData(indexInMD(i),3:5)); % bp1: boundary points of a point found in medialData 
+                    for j = 1 : numPtArr % compare a point in medialData with all same-coord points in pointsArray 
+                        bp2 = sort(bma.indexOfBndryPoints(index(j),:)); % bp2: boundary points of a point in pointsArray
+                        if (~isempty(find(~(bp1 == bp2)))) % compare two sets of boundary points, if boundary points are different, mark 0 in a comparison result array(diffPtsTF) 
+                            diffPtsTF = [diffPtsTF 0];
+                        else
+                            diffPtsTF = [diffPtsTF 1]; % if boundary points are the same, mark 1 in a comparison result array(diffPtsTF) 
+                        end 
+                    end 
+                    if sum(diffPtsTF) == 0 % if this medialData point has different boundary points with all same-coord points in pointsArray, we add this point to pointArray 
+                        bma.pointsArray = [bma.pointsArray; point];
+                        bma.radiiArray = [bma.radiiArray; medialData(indexInMD(i),2)];
+                        bma.indexOfBndryPoints = [bma.indexOfBndryPoints; medialData(indexInMD(i),3:5)];
+                        break % added point, exit for loop 
+                    end 
+                end  
+            else %if the point is not in pointsArray already, add the point 
+                bma.pointsArray = [bma.pointsArray; point];
+                bma.radiiArray = [bma.radiiArray; medialData(indexInMD(1),2)];
+                bma.indexOfBndryPoints = [bma.indexOfBndryPoints; medialData(indexInMD(1),3:5)];
             end
         end
 
