@@ -1,4 +1,3 @@
-# This is a sample Python script.
 import numpy
 import numpy.linalg as npl
 import cmath;
@@ -30,7 +29,3 @@ z = numpy.array([p1, p2, p3, p4, p5, p6])
 
 myDET(p1, p2)
 tri_area(p1, p2, p3)
-
-# Press the green button in the gutter to run the script.
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/

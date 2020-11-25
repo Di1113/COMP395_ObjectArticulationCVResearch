@@ -9,14 +9,13 @@ def find_contour(img, binary):
         #cv2.imshow("img", img)
         #cv2.waitKey(0)
 
-    #找出contour中含最多点的contour，即最大的一个contour
+    #find the contour with the most points, i.e. the biggest contour
     max_len = 0
     for i in range(len(contours)):
         if len(contours[i])>len(contours[max_len]):
             max_len = i
         #print(contours[89])
 
-    #把坐标放进list
     coordinates = []
     for i in range(len(contours[max_len])):
         a = contours[max_len][i,0][0]
@@ -30,7 +29,6 @@ def find_contour(img, binary):
 # input a picture
 img = cv2.imread('2.jpg')
 
-#灰化  貌似效果不好  我直接拿了原来的黑白图像
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 ret, binary = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 

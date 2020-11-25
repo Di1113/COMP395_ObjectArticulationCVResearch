@@ -42,12 +42,18 @@ classdef BlumMedialAxis
         end
 
         % METHODS 
-        function bma = prune(bma, etRatio, stThreshold)
+        function bma = prune_wETST(bma, etRatio, stThreshold)
             % We'll calculate area of the shape
             area = polyarea(real(bma.boundary), imag(bma.boundary));
             etThreshold = etRatio * sqrt(area);
 
             indicesToRemove = find(bma.EDFArray < etThreshold | bma.EDFArray < stThreshold);
+
+            bma = bma.removeAtIndex(indicesToRemove);
+        end
+ 
+        function bma = prune_wWEDF(bma, wedfThreshold)
+            indicesToRemove = find(bma.WEDFArray < wedfThreshold);
 
             bma = bma.removeAtIndex(indicesToRemove);
         end
@@ -94,7 +100,6 @@ classdef BlumMedialAxis
 
         end
 
-% pyed
         function bma = buildPoints(bma, medialData)
         % BUILDPOINTS Sets up our medial axis based on the information in
         % medialData. medialData should be an nx5 matrix where medialData(n,1)
@@ -206,7 +211,7 @@ classdef BlumMedialAxis
             mymin= min(bma.EDFArray);
             mymax= max(bma.EDFArray);
             for i=1:l
-                c1 = bma.boundary(bma.indexOfBndryPoints(i,1));
+                 c1 = bma.boundary(bma.indexOfBndryPoints(i,1));
                  c2 = bma.boundary(bma.indexOfBndryPoints(i,2));
                  c3 = bma.boundary(bma.indexOfBndryPoints(i,3));
 
