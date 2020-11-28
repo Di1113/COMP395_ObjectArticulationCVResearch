@@ -24,8 +24,8 @@ Date: 11/24/2020
     + Perform shape analysis on a sample cat image and saves WEDF plot to a designated path.
 
 ### Python code files: 
-- __medialaxis.py__: _#tested_
-- __medialorder.py__: _#testing_
+- __medialaxis.py__: _#tested_ :heavy_check_mark:
+- __medialorder.py__: _#tested_ :heavy_check_mark:
 - __BlumMedialAxis.py__: _#translating_
 - __calculateWEDF.py__: _#translating_
 - __find_contour.py__: _#testcode_
