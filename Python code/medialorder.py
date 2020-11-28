@@ -6,9 +6,6 @@ def medialorder(medialdata):
     m2 = medialdata[:,0]
     r2 = medialdata[:,1]
     triin2 = medialdata[:,2:5]
-    #print(m2)
-    #print(r2)
-    #print(triin2)
 
     nt = triin2.shape[0]                          # nt = size(triin2,1)  == 3
 
@@ -19,11 +16,9 @@ def medialorder(medialdata):
     array_new = np.append(array_new,array3)
     I = np.array(array_new)
     mat_I = mat(I)
-    #print("I:", I)
 
     J = triin2.flatten('F')    # triin2(:)
-    array_J = J.A[0]          # J.A means converting matrix to ndarray
-    #print("J:",array_J)
+    array_J = J.real.astype(int)
 
     V = np.ones((3*nt),dtype=int)                              # ones(1,3*nt)
     #print("V:",V)
@@ -32,10 +27,7 @@ def medialorder(medialdata):
     B2 = np.transpose(B1)
     B = np.dot(B1,B2)
 
-    #test = np.mat([[0,5,5],[1,1,1],[0,0,0]])
-    #print(test)
     C = np.where(B > 1)
-    # print("new:",C)
     array_x = C[0]
     array_y = C[1]
     new_x = []
@@ -53,15 +45,16 @@ def medialorder(medialdata):
     list1 = []
     list2 = []
     for i in range(len(new_x)):
-        list1.append(m2[new_x[i] - 1].tolist()[0])
-        list2.append(m2[new_y[i] - 1].tolist()[0])
+        list1.append(m2[new_x[i] - 1].tolist())
+        list2.append(m2[new_y[i] - 1].tolist())
 
     mord = np.asmatrix(np.array([list1,list2]))
-    # print(list1)
-    # print(list2)
     return mord 
 
-medialdata = np.mat([[1,2,8,9,11],[4,5,6,12,12],[7,8,9,17,6],[7,8,9,17,6],[7,8,9,17,6]])
-print(medialdata)
-mord = medialorder(medialdata)
-print(mord)
+''' simple test case
+# medialdata = np.mat([[1,2,8,9,11],[4,5,6,12,12],[7,8,9,17,6],[7,8,9,17,6],[7,8,9,17,6]])
+# # [1 2 8 9 11; 4 5 6 12 12; 7 8 9 17 6; 7 8 9 17 6; 7 8 9 17 6]
+# # print(medialdata)
+# mord = medialorder(medialdata)
+# print(mord)
+'''
